@@ -1,92 +1,40 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { ArrowUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
-
-interface PortfolioRow {
-  sku: string
-  ingredient: string
-  source: string
-  riskTier: "Low" | "Medium" | "High"
-  deltaCogs: number
-  oldMargin: number
-  newMargin: number
-  deltaEbitda: number
-}
-
-const portfolioData: PortfolioRow[] = [
-  {
-    sku: "PRO-001",
-    ingredient: "Creatine",
-    source: "CN",
-    riskTier: "High",
-    deltaCogs: 18,
-    oldMargin: 42,
-    newMargin: 28,
-    deltaEbitda: -12,
-  },
-  {
-    sku: "PRO-002",
-    ingredient: "Whey Protein",
-    source: "US",
-    riskTier: "Low",
-    deltaCogs: 2,
-    oldMargin: 38,
-    newMargin: 37,
-    deltaEbitda: -1,
-  },
-  {
-    sku: "SUP-003",
-    ingredient: "Black Pepper",
-    source: "IN",
-    riskTier: "Medium",
-    deltaCogs: 8,
-    oldMargin: 45,
-    newMargin: 39,
-    deltaEbitda: -6,
-  },
-  {
-    sku: "PRO-004",
-    ingredient: "HDPE Plastic",
-    source: "MX",
-    riskTier: "Low",
-    deltaCogs: -4,
-    oldMargin: 32,
-    newMargin: 34,
-    deltaEbitda: 2,
-  },
-  {
-    sku: "SUP-005",
-    ingredient: "Magnesium",
-    source: "CN",
-    riskTier: "High",
-    deltaCogs: 14,
-    oldMargin: 40,
-    newMargin: 30,
-    deltaEbitda: -10,
-  },
-]
+import { useAgentInsights } from "@/hooks/use-agent-insights"
+import type { AiriaPortfolioRow } from "@/lib/airia"
 
 type SortField = "riskTier" | "source" | "deltaEbitda"
 
+const riskOrder = { High: 3, Medium: 2, Low: 1 }
+
+function sortPortfolioData(data: AiriaPortfolioRow[], field: SortField): AiriaPortfolioRow[] {
+  return [...data].sort((a, b) => {
+    if (field === "riskTier") {
+      return riskOrder[b.riskTier] - riskOrder[a.riskTier]
+    }
+    if (field === "source") {
+      return a.source.localeCompare(b.source)
+    }
+    return a.deltaEbitda - b.deltaEbitda
+  })
+}
+
 export function PortfolioRiskTable() {
+  const { insights, source } = useAgentInsights()
   const [sortField, setSortField] = useState<SortField>("riskTier")
-  const [sortedData, setSortedData] = useState(portfolioData)
+  const portfolioData = useMemo(() => insights.portfolioRisks ?? [], [insights.portfolioRisks])
+  const [sortedData, setSortedData] = useState<AiriaPortfolioRow[]>(sortPortfolioData(portfolioData, sortField))
+
+  useEffect(() => {
+    setSortedData(sortPortfolioData(portfolioData, sortField))
+  }, [portfolioData, sortField])
 
   const handleSort = (field: SortField) => {
     setSortField(field)
-    const sorted = [...portfolioData].sort((a, b) => {
-      if (field === "riskTier") {
-        const riskOrder = { High: 3, Medium: 2, Low: 1 }
-        return riskOrder[b.riskTier] - riskOrder[a.riskTier]
-      }
-      if (field === "source") {
-        return a.source.localeCompare(b.source)
-      }
-      return a.deltaEbitda - b.deltaEbitda
-    })
-    setSortedData(sorted)
+    setSortedData(sortPortfolioData(portfolioData, field))
   }
 
   const getRiskBadge = (risk: string) => {
@@ -104,7 +52,12 @@ export function PortfolioRiskTable() {
   return (
     <div className="bg-[#111214] border border-[#1F2123] rounded-lg overflow-hidden">
       <div className="border-b border-[#1F2123] p-4">
-        <h2 className="text-lg font-semibold text-[#EAEAEA] mb-4">Portfolio Risk Overview</h2>
+        <div className="flex items-center justify-between gap-4 mb-4">
+          <h2 className="text-lg font-semibold text-[#EAEAEA]">Portfolio Risk Overview</h2>
+          <span className="text-xs text-[#C9CDD1] font-mono">
+            {source === "airia" ? "Powered by Airia agent" : "Airia mock insights"}
+          </span>
+        </div>
         <div className="flex gap-2">
           <Button
             size="sm"

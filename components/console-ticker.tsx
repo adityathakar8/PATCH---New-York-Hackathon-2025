@@ -1,25 +1,10 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-
-interface TickerItem {
-  name: string
-  location: string
-  risk: "HIGH" | "STABLE" | "ALERT"
-  change?: string
-  message?: string
-}
-
-const tickerItems: TickerItem[] = [
-  { name: "Creatine", location: "CN", risk: "HIGH", change: "ΔCOGS +18%" },
-  { name: "Whey", location: "US", risk: "STABLE" },
-  { name: "Black Pepper", location: "IN", risk: "ALERT", message: "Drought" },
-  { name: "Creatine", location: "CN", risk: "HIGH", change: "ΔCOGS +18%" },
-  { name: "Whey", location: "US", risk: "STABLE" },
-  { name: "Black Pepper", location: "IN", risk: "ALERT", message: "Drought" },
-]
+import { useEffect, useMemo, useRef, useState } from "react"
+import { useAgentInsights } from "@/hooks/use-agent-insights"
 
 export function ConsoleTicker() {
+  const { insights } = useAgentInsights()
   const [isPaused, setIsPaused] = useState(false)
   const tickerRef = useRef<HTMLDivElement>(null)
 
@@ -35,6 +20,15 @@ export function ConsoleTicker() {
     if (risk === "STABLE") return "bg-[#21CE99]/10 text-[#21CE99] border-[#21CE99]/20"
     return "bg-[#FFD60A]/10 text-[#FFD60A] border-[#FFD60A]/20"
   }
+
+  const tickerItems = useMemo(() => {
+    if (!insights.ticker?.length) {
+      return [
+        { name: "Awaiting Airia", location: "—", risk: "ALERT" as const, message: "Upload data to start" },
+      ]
+    }
+    return insights.ticker
+  }, [insights.ticker])
 
   return (
     <div

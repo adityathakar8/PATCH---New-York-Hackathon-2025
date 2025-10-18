@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
+import { Toaster } from "@/components/ui/toaster"
 import "./globals.css"
 
 const ibmPlexSans = IBM_Plex_Sans({
@@ -35,6 +36,7 @@ export default function RootLayout({
         <Suspense fallback={null}>
           {children}
           <Analytics />
+          <Toaster />
         </Suspense>
       </body>
     </html>
