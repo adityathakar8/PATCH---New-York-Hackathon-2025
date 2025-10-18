@@ -3,14 +3,24 @@
 import { useEffect, useMemo, useState } from "react"
 import { ArrowUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useAgentInsights } from "@/hooks/use-agent-insights"
-import type { AiriaPortfolioRow } from "@/lib/airia"
+// Define portfolio row type locally
+type PortfolioRow = {
+  id: string
+  sku: string
+  ingredient: string
+  source: string
+  riskTier: 'Low' | 'Medium' | 'High'
+  deltaCogs: number
+  oldMargin: number
+  newMargin: number
+  deltaEbitda: number
+}
 
 type SortField = "riskTier" | "source" | "deltaEbitda"
 
 const riskOrder = { High: 3, Medium: 2, Low: 1 }
 
-function sortPortfolioData(data: AiriaPortfolioRow[], field: SortField): AiriaPortfolioRow[] {
+function sortPortfolioData(data: PortfolioRow[], field: SortField): PortfolioRow[] {
   return [...data].sort((a, b) => {
     if (field === "riskTier") {
       return riskOrder[b.riskTier] - riskOrder[a.riskTier]
@@ -23,10 +33,26 @@ function sortPortfolioData(data: AiriaPortfolioRow[], field: SortField): AiriaPo
 }
 
 export function PortfolioRiskTable() {
-  const { insights, source } = useAgentInsights()
+  // Mock data for portfolio risk table
+  const insights = {
+    portfolioRisks: [
+      {
+        id: 'fallback-1',
+        sku: 'PRO-001',
+        ingredient: 'Creatine',
+        source: 'CN',
+        riskTier: 'High' as const,
+        deltaCogs: 18,
+        oldMargin: 42,
+        newMargin: 28,
+        deltaEbitda: -14,
+      },
+    ]
+  }
+  const source = 'mock'
   const [sortField, setSortField] = useState<SortField>("riskTier")
   const portfolioData = useMemo(() => insights.portfolioRisks ?? [], [insights.portfolioRisks])
-  const [sortedData, setSortedData] = useState<AiriaPortfolioRow[]>(sortPortfolioData(portfolioData, sortField))
+  const [sortedData, setSortedData] = useState<PortfolioRow[]>(sortPortfolioData(portfolioData, sortField))
 
   useEffect(() => {
     setSortedData(sortPortfolioData(portfolioData, sortField))
@@ -55,7 +81,7 @@ export function PortfolioRiskTable() {
         <div className="flex items-center justify-between gap-4 mb-4">
           <h2 className="text-lg font-semibold text-[#EAEAEA]">Portfolio Risk Overview</h2>
           <span className="text-xs text-[#C9CDD1] font-mono">
-            {source === "airia" ? "Powered by Airia agent" : "Airia mock insights"}
+            {source === "live" ? "Live insights" : "Mock insights"}
           </span>
         </div>
         <div className="flex gap-2">

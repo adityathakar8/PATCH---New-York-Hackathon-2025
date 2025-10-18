@@ -1,10 +1,13 @@
 "use client"
 
 import { useEffect, useMemo, useRef, useState } from "react"
-import { useAgentInsights } from "@/hooks/use-agent-insights"
-
 export function ConsoleTicker() {
-  const { insights } = useAgentInsights()
+  // Mock data for ticker display
+  const insights = {
+    ticker: [
+      { name: "System Ready", location: "—", risk: "STABLE" as const, message: "Upload data to start" },
+    ]
+  }
   const [isPaused, setIsPaused] = useState(false)
   const tickerRef = useRef<HTMLDivElement>(null)
 
@@ -24,7 +27,7 @@ export function ConsoleTicker() {
   const tickerItems = useMemo(() => {
     if (!insights.ticker?.length) {
       return [
-        { name: "Awaiting Airia", location: "—", risk: "ALERT" as const, message: "Upload data to start" },
+        { name: "System Ready", location: "—", risk: "STABLE" as const, message: "Upload data to start" },
       ]
     }
     return insights.ticker

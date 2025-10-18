@@ -1,10 +1,36 @@
 "use client"
 
 import { TrendingDown, TrendingUp, AlertTriangle } from "lucide-react"
-import { useAgentInsights } from "@/hooks/use-agent-insights"
-
 export function VisualInsights() {
-  const { insights, source } = useAgentInsights()
+  // Mock data for visual insights
+  const insights = {
+    marginAtRisk: {
+      window: '30–90d',
+      value: -12,
+      direction: 'down' as const,
+      sparkline: [42, 40, 38, 36, 35, 33, 32, 30, 30, 28, 28, 30],
+      message: 'Baseline insights. Upload data to unlock live analytics.',
+    },
+    ingredientMovers: [
+      {
+        sku: 'PRO-001',
+        ingredient: 'Creatine',
+        location: 'CN',
+        trend: 'RISING' as const,
+        deltaRisk: 12,
+        note: 'Mock data pending data upload.',
+      },
+    ],
+    topAlerts: [
+      {
+        title: 'Upload data to start',
+        summary: 'Once you upload your data, insights will update automatically.',
+        confidence: 0.5,
+        severity: 'low' as const,
+      },
+    ],
+  }
+  const source = 'mock'
 
   const marginColor = insights.marginAtRisk.direction === "down" ? "#FF3B30" : "#21CE99"
   const sparklineMax = Math.max(...insights.marginAtRisk.sparkline, 1)
@@ -16,7 +42,7 @@ export function VisualInsights() {
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-sm font-semibold text-[#EAEAEA]">Margin-at-Risk ({insights.marginAtRisk.window})</h3>
           <span className="text-[10px] uppercase tracking-wide text-[#C9CDD1] font-mono">
-            {source === "airia" ? "Live" : "Mock"} Airia Insight
+            {source === "live" ? "Live" : "Mock"} Insight
           </span>
         </div>
         <div className="space-y-4">
