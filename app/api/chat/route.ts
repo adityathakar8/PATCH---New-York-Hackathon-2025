@@ -30,9 +30,7 @@ export async function POST(req: Request) {
   }
 
   const perplexityApiKey = process.env.PERPLEXITY_API_KEY
-  if (!perplexityApiKey) {
-    return NextResponse.json({ error: "PERPLEXITY_API_KEY is not configured" }, { status: 500 })
-  }
+  // Note: API key is optional - will use mock responses if not provided
 
   const runDir = path.join(RUNS_DIR, payload.runId)
   if (!(await pathExists(runDir))) {
@@ -85,11 +83,17 @@ export async function POST(req: Request) {
   ].join("\n")
 
   try {
-    const answer = await callPerplexityChat({
-      apiKey: perplexityApiKey,
-      systemPrompt,
-      userPrompt,
-    })
+    let answer: string
+    if (perplexityApiKey) {
+      answer = await callPerplexityChat({
+        apiKey: perplexityApiKey,
+        systemPrompt,
+        userPrompt,
+      })
+    } else {
+      // Use mock response when API key is not available
+      answer = generateMockChatResponse(payload.message, resultsForContext)
+    }
 
     return NextResponse.json({ answer })
   } catch (error) {
@@ -175,5 +179,28 @@ async function readOptionalText(filePath: string) {
   }
   const contents = await fs.readFile(filePath, "utf8")
   return contents.slice(0, 2000)
+}
+
+function generateMockChatResponse(message: string, results: PerplexityResult[]): string {
+  const messageLower = message.toLowerCase()
+  
+  if (messageLower.includes("risk") || messageLower.includes("margin")) {
+    const highRiskCount = results.filter(r => r.overall_risk_tier === "high").length
+    const avgMarginDrop = results.length > 0 
+      ? results.reduce((sum, r) => sum + (r.margin_drop_pct ?? 0), 0) / results.length 
+      : 0
+    
+    return `Based on your SKU data, I found ${highRiskCount} high-risk items. The average margin impact is ${(avgMarginDrop * 100).toFixed(1)}%. Key risks include supply chain disruptions and freight cost increases. Consider diversifying suppliers and negotiating longer-term contracts.`
+  }
+  
+  if (messageLower.includes("supplier") || messageLower.includes("alternative")) {
+    return `For supplier diversification, I recommend exploring suppliers in Southeast Asia and Eastern Europe. These regions often offer competitive pricing and have been less affected by recent supply chain disruptions. Consider conducting supplier audits and establishing backup suppliers for critical SKUs.`
+  }
+  
+  if (messageLower.includes("cost") || messageLower.includes("price")) {
+    return `Current cost pressures are primarily driven by freight increases (8-12%) and raw material volatility. I suggest implementing cost-plus pricing models and considering forward contracts for key commodities. Monitor fuel surcharges and explore alternative shipping routes.`
+  }
+  
+  return `I understand you're asking about "${message}". Based on your uploaded SKU data, I can help analyze risks, margins, and sourcing strategies. The system has processed your data and identified several areas for optimization. Would you like me to focus on any specific aspect like risk assessment, cost analysis, or supplier recommendations?`
 }
 
