@@ -112,7 +112,7 @@ export function ConsolePreview() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
             <Button asChild size="lg" className="bg-[#3D7FFF] text-[#EAEAEA] hover:bg-[#3D7FFF]/90 w-full sm:w-auto">
-              <Link href="/console">Launch Console</Link>
+              <Link href="/upload">Get Started</Link>
             </Button>
             <Button
               asChild

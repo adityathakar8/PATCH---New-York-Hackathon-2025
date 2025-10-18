@@ -23,7 +23,7 @@ export function HeroSection() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button asChild size="lg" className="bg-[#3D7FFF] text-[#EAEAEA] hover:bg-[#3D7FFF]/90 w-full sm:w-auto">
-              <Link href="/console">Launch Console</Link>
+              <Link href="/upload">Upload Your SKUs</Link>
             </Button>
             <Button
               asChild
@@ -31,7 +31,7 @@ export function HeroSection() {
               variant="outline"
               className="border-[#1F2123] bg-[#151719] text-[#C9CDD1] hover:bg-[#1F2123] hover:text-[#EAEAEA] w-full sm:w-auto"
             >
-              <Link href="/upload">Upload SKUs</Link>
+              <Link href="/docs">Learn More</Link>
             </Button>
           </div>
         </div>

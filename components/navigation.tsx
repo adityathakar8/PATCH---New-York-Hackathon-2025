@@ -72,7 +72,7 @@ export function Navigation() {
               <Link href="/upload">Upload SKUs</Link>
             </Button>
             <Button asChild size="sm" className="bg-[#3D7FFF] text-[#EAEAEA] hover:bg-[#3D7FFF]/90">
-              <Link href="/console">Launch Console</Link>
+              <Link href="/upload">Get Started</Link>
             </Button>
           </div>
         </div>

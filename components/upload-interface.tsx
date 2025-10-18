@@ -34,7 +34,7 @@ export function UploadInterface() {
               size="lg"
               className="w-full sm:w-auto bg-[#21CE99] text-[#0B0B0B] hover:bg-[#21CE99]/90 font-semibold shadow-lg shadow-[#21CE99]/20"
             >
-              <Link href="/console">Analyze My Business</Link>
+              <Link href="/console">Launch Console & Analyze</Link>
             </Button>
             <Button
               asChild
