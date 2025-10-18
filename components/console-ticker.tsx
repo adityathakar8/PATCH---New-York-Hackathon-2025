@@ -31,7 +31,7 @@ export function ConsoleTicker() {
       ]
     }
     return insights.ticker
-  }, [insights.ticker])
+  }, [])
 
   return (
     <div
