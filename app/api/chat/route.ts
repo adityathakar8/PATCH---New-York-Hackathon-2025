@@ -85,11 +85,17 @@ export async function POST(req: Request) {
   try {
     let answer: string
     if (perplexityApiKey) {
-      answer = await callPerplexityChat({
-        apiKey: perplexityApiKey,
-        systemPrompt,
-        userPrompt,
-      })
+      try {
+        answer = await callPerplexityChat({
+          apiKey: perplexityApiKey,
+          systemPrompt,
+          userPrompt,
+        })
+      } catch (perplexityError) {
+        console.warn("Perplexity API failed, falling back to mock response:", perplexityError)
+        // Fall back to mock response if Perplexity API fails
+        answer = generateMockChatResponse(payload.message, resultsForContext)
+      }
     } else {
       // Use mock response when API key is not available
       answer = generateMockChatResponse(payload.message, resultsForContext)

@@ -1,0 +1,22 @@
+[
+  {
+    "sku": "SKU001",
+    "product_name": "Test Product",
+    "ingredient_keywords": [],
+    "source_country": "China",
+    "cogs_per_unit": 10,
+    "sell_price": 15,
+    "margin_pct": 0.33,
+    "monthly_units": 1000
+  },
+  {
+    "sku": "SKU002",
+    "product_name": "Another Product",
+    "ingredient_keywords": [],
+    "source_country": "India",
+    "cogs_per_unit": 8,
+    "sell_price": 12,
+    "margin_pct": 0.33,
+    "monthly_units": 500
+  }
+]

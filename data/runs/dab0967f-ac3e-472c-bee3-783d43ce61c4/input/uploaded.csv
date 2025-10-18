@@ -1,0 +1,3 @@
+SKU,Product Name,Source Country,COGS,Sell Price,Margin,Monthly Units
+SKU001,Test Product,China,10.00,15.00,0.33,1000
+SKU002,Another Product,India,8.00,12.00,0.33,500

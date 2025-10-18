@@ -1,0 +1,64 @@
+[
+  {
+    "sku": "SKU001",
+    "product_name": "Test Product",
+    "as_of": "2025-10-18",
+    "factors": [
+      {
+        "category": "Supply",
+        "description": "Global supply chain disruptions affecting raw material availability",
+        "direction": "up",
+        "impact": "medium",
+        "confidence": 0.7,
+        "source_url": "https://example.com/supply-chain-report",
+        "source_date": "2025-10-18"
+      },
+      {
+        "category": "Freight",
+        "description": "Increased shipping costs due to fuel price volatility",
+        "direction": "up",
+        "impact": "low",
+        "confidence": 0.6,
+        "source_url": "https://example.com/freight-costs",
+        "source_date": "2025-10-18"
+      }
+    ],
+    "overall_risk_tier": "medium",
+    "overall_risk_score": 0.5,
+    "predicted_cogs_change_pct": 0.08,
+    "old_margin_pct": 0.33,
+    "new_margin_pct": 0.25,
+    "margin_drop_pct": 0.08000000000000002
+  },
+  {
+    "sku": "SKU002",
+    "product_name": "Another Product",
+    "as_of": "2025-10-18",
+    "factors": [
+      {
+        "category": "Supply",
+        "description": "Global supply chain disruptions affecting raw material availability",
+        "direction": "up",
+        "impact": "medium",
+        "confidence": 0.7,
+        "source_url": "https://example.com/supply-chain-report",
+        "source_date": "2025-10-18"
+      },
+      {
+        "category": "Freight",
+        "description": "Increased shipping costs due to fuel price volatility",
+        "direction": "up",
+        "impact": "low",
+        "confidence": 0.6,
+        "source_url": "https://example.com/freight-costs",
+        "source_date": "2025-10-18"
+      }
+    ],
+    "overall_risk_tier": "low",
+    "overall_risk_score": 0.2,
+    "predicted_cogs_change_pct": 0.03,
+    "old_margin_pct": 0.33,
+    "new_margin_pct": 0.30000000000000004,
+    "margin_drop_pct": 0.02999999999999997
+  }
+]

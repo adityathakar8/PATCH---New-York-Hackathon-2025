@@ -1,0 +1,26 @@
+[
+  {
+    "sku": "SKU001",
+    "product_name": "Protein Powder",
+    "as_of": "2025-10-18",
+    "factors": [],
+    "overall_risk_tier": "low",
+    "overall_risk_score": 0.15,
+    "predicted_cogs_change_pct": 0,
+    "old_margin_pct": 0.44,
+    "new_margin_pct": 0.44,
+    "margin_drop_pct": 0
+  },
+  {
+    "sku": "SKU002",
+    "product_name": "Creatine Monohydrate",
+    "as_of": "2025-10-18",
+    "factors": [],
+    "overall_risk_tier": "low",
+    "overall_risk_score": 0.15,
+    "predicted_cogs_change_pct": 0,
+    "old_margin_pct": 0.56,
+    "new_margin_pct": 0.56,
+    "margin_drop_pct": 0
+  }
+]

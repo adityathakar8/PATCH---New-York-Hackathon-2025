@@ -1,0 +1,22 @@
+[
+  {
+    "sku": "SKU001",
+    "product_name": "Protein Powder",
+    "ingredient_keywords": [],
+    "source_country": "China",
+    "cogs_per_unit": 25,
+    "sell_price": 45,
+    "margin_pct": 0.44,
+    "monthly_units": 2000
+  },
+  {
+    "sku": "SKU002",
+    "product_name": "Creatine Monohydrate",
+    "ingredient_keywords": [],
+    "source_country": "India",
+    "cogs_per_unit": 8,
+    "sell_price": 18,
+    "margin_pct": 0.56,
+    "monthly_units": 1500
+  }
+]
