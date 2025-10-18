@@ -31,16 +31,6 @@ export function Navigation() {
             </Link>
             <div className="hidden md:flex items-center gap-6">
               <Link
-                href="/console"
-                className={`text-sm transition-colors pb-1 ${
-                  pathname === "/console"
-                    ? "text-[#EAEAEA] font-medium border-b-2 border-[#3D7FFF]"
-                    : "text-[#C9CDD1] hover:text-[#EAEAEA]"
-                }`}
-              >
-                Console
-              </Link>
-              <Link
                 href="/pricing"
                 className={`text-sm transition-colors pb-1 ${
                   pathname === "/pricing"
